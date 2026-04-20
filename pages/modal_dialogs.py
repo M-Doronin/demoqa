@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from components.components import WebElement
+import time
 
 class ModalDialogsPage(BasePage):
     def __init__(self, driver):
@@ -8,7 +9,22 @@ class ModalDialogsPage(BasePage):
 
         self.btns_submenu = WebElement(driver, '.btn btn-primary')
 
-        self.icon_home = WebElement(driver, '.header:nth-child(1) > a:nth-child(1) > img:nth-child(1)')
+        self.icon_home = WebElement(driver, '#root > header > a > img')
 
     def visit(self):
         self.driver.get(self.base_url)
+
+    @classmethod
+    def is_page_available(cls, driver):
+        """
+        Проверяет доступность страницы через проверку наличия ключевого элемента после загрузки.
+        Возвращает True, если элемент найден, иначе False.
+        """
+        try:
+            # Создаём временный экземпляр для проверки
+            temp_page = cls(driver)
+            temp_page.visit()
+            time.sleep(3)
+            return temp_page.btns_submenu.exist()
+        except Exception:
+            return False
