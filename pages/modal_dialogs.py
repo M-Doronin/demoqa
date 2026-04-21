@@ -16,12 +16,7 @@ class ModalDialogsPage(BasePage):
 
     @classmethod
     def is_page_available(cls, driver):
-        """
-        Проверяет доступность страницы через проверку наличия ключевого элемента после загрузки.
-        Возвращает True, если элемент найден, иначе False.
-        """
         try:
-            # Создаём временный экземпляр для проверки
             temp_page = cls(driver)
             temp_page.visit()
             time.sleep(3)
